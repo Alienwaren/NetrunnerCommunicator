@@ -1,0 +1,301 @@
+﻿		/// <summary>
+        /// Konstruktor domyślny 
+        /// </summary>
+        public Button(Vector2f initialButtonPosition)
+        {
+         
+            if (loadButton()) //ładowanie guzika
+            {
+                Console.WriteLine("Success!");
+                bindTexture();
+            }
+            else
+            {
+                Console.WriteLine("Failed!");
+            }
+            initAttributes(initialButtonPosition); // inicjacja atrybutów guzika 
+            
+        }
+        /// <summary>
+        /// Inicjacja guzika, razem z jego podpisem. Jest to konstruktor przeciążony do poprzedniego
+        /// </summary>
+        /// <param name="initialButtonPosition">Domyślna pozycja guzika</param>
+        /// <param name="fontFilename">Nazwa czcionki</param>
+        /// <param name="labelText">Napis do wyświetlenia</param>
+        public Button(Vector2f initialButtonPosition, string fontFilename, string labelText)
+        {
+
+            if (loadButton()) //ładowanie guzika
+            {
+                Console.WriteLine("Success!");
+                bindTexture();
+            }
+            else
+            {
+                Console.WriteLine("Failed!");
+            }
+            initAttributes(initialButtonPosition); // inicjacja atrybutów guzika 
+
+            if (initLabels(fontFilename, labelText)) //inicjacja podpisów guzika
+            {
+                Console.WriteLine("Success!");
+            }
+            else
+            {
+                Console.WriteLine("Failed!");
+            }
+        }
+        /// <summary>
+        /// Kolor guzika
+        /// </summary>
+        protected Color buttonColor = new Color();
+        /// <summary>
+        /// Inicjacja atrybutów guzika
+        /// </summary>
+        protected void initAttributes(Vector2f buttonPosition)
+        {
+            buttonSprite.Origin = new Vector2f(buttonSprite.GetGlobalBounds().Height / 2, buttonSprite.GetGlobalBounds().Width / 2);
+            buttonImagePosition = buttonPosition; //ustawienie guzika na swoje miejsce
+            buttonSprite.Scale = new Vector2f(0.5F, 0.5F);
+        }
+        /// <summary>
+        /// Tesktura guzika
+        /// </summary>
+        protected Texture buttonTexture;
+        /// <summary>
+        /// Ładowanie do guzika do pamięci
+        /// </summary>
+        /// <returns>Zwraca stan powodzenia</returns>
+        protected virtual Boolean loadButton()
+        {
+            try
+            {
+                Console.Write("Loading exit button image...");
+                buttonTexture = new Texture("../../Resources/Graphics/buttons_texture.png");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return false;
+        }
+        /// <summary>
+        /// Sprajt guzika
+        /// </summary>
+        protected Sprite buttonSprite;
+        /// <summary>
+        /// Zwraca sprite guzika
+        /// </summary>
+        /// <returns></returns>
+        public Sprite getButtonSprite()
+        {
+            return buttonSprite;
+        }
+        /// <summary>
+        /// Podpięcie tekstury
+        /// </summary>
+        protected void bindTexture()
+        {
+            buttonSprite = new Sprite(buttonTexture);
+        }
+        /// <summary>
+        /// Narysowanie guzika w oknie razem z podpisem
+        /// </summary>
+        /// <param name="drawingWindow">Okno do narysowania</param>
+        public void drawButton(RenderWindow drawingWindow)
+        {
+            drawingWindow.Draw(buttonSprite);
+            drawingWindow.Draw(buttonLabel);
+        }
+        /// <summary>
+        /// Pozycja guzika
+        /// </summary>
+        protected Vector2f buttonImagePosition;
+        /// <summary>
+        /// Właściwość która pozwala na dobranie się do pozycji obrazka.
+        /// </summary>
+        public Vector2f buttonPosition
+        {
+            get
+            {
+                return buttonImagePosition;
+            }
+            set
+            {
+                buttonImagePosition.X = value.X;
+                buttonImagePosition.Y = value.Y;
+            }
+        }
+        /// <summary>
+        /// Aktualizacja przycisku
+        /// </summary>
+        public void update()
+        {
+            setBoundingBox();
+            buttonSprite.Position = buttonImagePosition;
+        }
+        /// <summary>
+        /// Bounding box guzika
+        /// </summary>
+        protected FloatRect globalBounds;
+        /// <summary>
+        /// Włączenie boksa kolizji
+        /// </summary>
+        protected void setBoundingBox()
+        {
+            globalBounds = buttonSprite.GetGlobalBounds();
+        }
+        /// <summary>
+        /// Funkcja implementująca reakcję na klik. Sprawdza pole clickAmount i w zaleznosci od ilosci klikniec zmienia na rozny kolor.
+        /// </summary>
+        public void onClick(RenderWindow buttonRenderWindow)
+        {
+                buttonColor = new Color(255,255,255, 128);
+                this.buttonSprite.Color = buttonColor;
+                buttonRenderWindow.Close(); 
+        }
+        /// <summary>
+        /// Czcionka podpisu guzika
+        /// </summary>
+        protected Font buttonLabelFont;
+        /// <summary>
+        /// Podpis guzika
+        /// </summary>
+        protected Text buttonLabel = new Text();
+        /// <summary>
+        /// Ustawia parametry podpisu
+        /// </summary>
+        /// <param name="filename">Czcionka napisu</param>
+        /// <param name="labelText">Tekst który zosanie wyświetlony</param>
+        /// <returns>Zwraca czy sie udało</returns>
+        protected Boolean initLabels(string filename, string labelText)
+        {
+            try
+            {
+                Console.Write("Loading button label font...");
+                buttonLabelFont = new Font(filename);
+                buttonLabel.Font = buttonLabelFont;
+                buttonLabel.CharacterSize = 16;
+                buttonLabel.DisplayedString = labelText;
+                buttonLabel.Origin = new Vector2f(this.buttonLabel.GetGlobalBounds().Height / 2, this.buttonLabel.GetGlobalBounds().Width / 2);
+                buttonLabel.Position = new Vector2f(this.buttonImagePosition.X - 12, this.buttonImagePosition.Y + 45);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return false;
+        }
+       
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+        /// Konstruktor domyślny. Nie do użycia bo prywatny
+        /// </summary>
+        private TemperatureReceiver()
+        {
+            
+        }
+        /// <summary>
+        /// Konstruktor przeciążony. Inicjuje parametry serwera oraz je wyświetla.
+        /// </summary>
+        /// <param name="serverIp">IP na którym ma server.</param>
+        /// <param name="port">Port serwera na którym server stoi</param>
+        public TemperatureReceiver(string serverIp, int port)
+        {
+            Console.Write("Initiating temperature server receiver...");
+            if (initServer(serverIp, port))
+            {
+                Console.WriteLine("Success!");
+                tcpListener.Start(5);
+                
+            }
+            else
+            {
+                Console.WriteLine("Failed!");
+            }
+            printParameters();
+        }
+        /// <summary>
+        /// Adres IP serwera
+        /// </summary>
+        private IPAddress servIp;
+        /// <summary>
+        /// Nasłuchiwacz na TCP
+        /// </summary>
+        private TcpListener tcpListener;
+        /// <summary>
+        /// Port servera
+        /// </summary>
+        private int serverPort = 0;
+        /// <summary>
+        /// Inicjuje dzialanie servera
+        /// </summary>
+        /// <returns>Zwraca stan inicjacji</returns>
+        private Boolean initServer(string serverIp, int port)
+        {
+            serverPort = port;
+            try
+            {
+                servIp = IPAddress.Parse(serverIp); //przypisanie adresu ip serwera
+                try
+                {
+                    tcpListener = new TcpListener(servIp, serverPort); //uruchomienie nasłuchwiacza
+                    return true;
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("/n" + e.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("/n" + e.ToString());
+            }
+            return false;
+        }
+        /// <summary>
+        /// Wyświetlenie parametrów serwera
+        /// </summary>
+        private void printParameters()
+        {
+            Console.Write("Server is at: ");
+            Console.WriteLine(this.servIp.ToString() + ":" + this.serverPort);
+        }
+        /// <summary>
+        /// Licznik który w razie w przerwie łączenie się
+        /// </summary>
+        Timer connectionTimeout = new Timer(500);
+        /// <summary>
+        /// Czy pętla działa
+        /// </summary>
+        Boolean running = false;
+        /// <summary>
+        /// Gniazdo służące do połączeń
+        /// </summary>
+        Socket serverSocket;
+        /// <summary>
+        /// Akceptacja połączenia
+        /// </summary>
+        public void acceptConnection()
+        {
+            connectionTimeout.Elapsed += connectionTimeout_Elapsed;
+            connectionTimeout.Enabled = true;
+            running = true;
+            while (running)
+            {
+                serverSocket
+            }
+            connectionTimeout.Enabled = false;
+        }
+
+        void connectionTimeout_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            running = false;
+        }
+        
+        
