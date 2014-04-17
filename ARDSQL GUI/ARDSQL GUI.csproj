@@ -72,6 +72,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unit test">
+      <HintPath>..\Unit test\bin\Release\Unit test.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sources\Button.cs" />

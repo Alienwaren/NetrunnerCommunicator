@@ -142,6 +142,6 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Obiekt serwera danych
         /// </summary>
-        TemperatureReceiver receiver = new TemperatureReceiver(134, "192.168.4.155");
+        TemperatureReceiver receiver = new TemperatureReceiver(134, "192.168.1.5");
     }
 }
