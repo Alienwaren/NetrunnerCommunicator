@@ -43,5 +43,24 @@ namespace ARDSQL_GUI
                 return false;
             }
         }
+
+        /// <summary>
+        /// Sprawdzenie czy wystapila kolizja z guzikiem
+        /// </summary>
+        /// <param name="av_shape">Obiekt do sprawdzenia</param>
+        /// <param name="av_Window">Okno renderu</param>
+        /// <returns>Zwraca czy kolizja nastąpiła</returns>
+        public Boolean checkForMouseCollision(RectangleShape av_shape, RenderWindow av_Window)
+        {
+            FloatRect tempRect = av_shape.GetGlobalBounds();
+            if (tempRect.Contains(this.mousePosition.X, this.mousePosition.Y))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

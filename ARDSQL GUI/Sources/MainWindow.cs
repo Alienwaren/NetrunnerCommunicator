@@ -32,6 +32,7 @@ namespace ARDSQL_GUI
             maxTemp.drawAll(window1);
             connection1.draw(window1);
             exit1.draw(window1);
+            statusBar.draw(window1);
             window1.Display();
         }
 
@@ -82,6 +83,10 @@ namespace ARDSQL_GUI
             {
                 connection1.onClick(receiver, 2);
             }
+            if (windowMouse.checkForMouseCollision(statusBar.getShape(), window1))
+            {
+                statusBar.onClick();
+            }
         }
         /// <summary>
         /// Pobranie zdarzenia zamknięcia okna
@@ -110,6 +115,7 @@ namespace ARDSQL_GUI
             minTemp.updateTemperatureString();
             maxTemp.updateTemperatureString();
             avgTemp.updateTemperatureString();
+            statusBar.update();
         }
         /// <summary>
         /// Obiekt reprezentujący okno programu
@@ -118,15 +124,15 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Obiekt typu temperature reprzentujący temperature - temp srednia
         /// </summary>
-        Temperature avgTemp = new Temperature(new Vector2f(0,0), "AvgTemp");
+        Temperature avgTemp = new Temperature(new Vector2f(0,50), "AvgTemp");
         /// <summary>
         /// Reprezentacja najmniejszej temperatury
         /// </summary>
-        Temperature minTemp = new Temperature(new Vector2f(80, 0), "MinTemp");
+        Temperature minTemp = new Temperature(new Vector2f(80, 50), "MinTemp");
         /// <summary>
         /// Reprezentacja największej temperatury
         /// </summary>
-        Temperature maxTemp = new Temperature(new Vector2f(160, 0), "MaxTemp");
+        Temperature maxTemp = new Temperature(new Vector2f(160, 50), "MaxTemp");
         /// <summary>
         /// Mysz programu
         /// </summary>
@@ -142,6 +148,10 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Obiekt serwera danych
         /// </summary>
-        TemperatureReceiver receiver = new TemperatureReceiver(134, "192.168.1.5");
+        TemperatureReceiver receiver = new TemperatureReceiver(134, "192.168.1.3", "192.168.1.4");
+        /// <summary>s
+        /// Pasek statusu
+        /// </summary>
+        StatusBar statusBar = new StatusBar(new Color(Color.Green), new Vector2f(0, 0), new Vector2f(250,50), "Ready to work", "Working...", new Color(Color.Red));
     }
 }
