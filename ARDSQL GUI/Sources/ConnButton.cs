@@ -13,18 +13,31 @@ namespace ARDSQL_GUI
     class ConnButton
         : Button
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="initialButtonPosition">Pozycja guzika</param>
+        /// <param name="buttonName">Nazwa guzika</param>
         public ConnButton(Vector2f initialButtonPosition, String buttonName)
             : base()
         {
             setTexture();
             setAttributes(initialButtonPosition, buttonName);
         }
+        /// <summary>
+        /// Ustawienie tesktury
+        /// </summary>
         protected override void setTexture()
         {
             base.setTexture();
             this.spriteRect = new IntRect(9, 36, 359, 379);
             this.buttonSprite = new Sprite(base.buttonTextures, this.spriteRect);
         }
+        /// <summary>
+        /// Ustawienie atrybutó
+        /// </summary>
+        /// <param name="initialButtonPosition">Pozycja guzika</param>
+        /// <param name="buttonName">I jego nazwa</param>
         protected override void setAttributes(Vector2f initialButtonPosition, string buttonName)
         {
             base.setAttributes(initialButtonPosition, buttonName);

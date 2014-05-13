@@ -33,7 +33,6 @@ namespace ARDSQL_GUI
             connection1.draw(window1);
             exit1.draw(window1);
             statusBar.draw(window1);
-            rpiStatus.draw(window1);
             window1.Display();
         }
 
@@ -44,14 +43,12 @@ namespace ARDSQL_GUI
         {
             window1.SetFramerateLimit(60);
             initEvents();
-            rpiStatus.bindTextureAndSetAttrib(this.rpiTextureStatus.statusRpi);
             while (window1.IsOpen())
             {
                 update();
                 window1.DispatchEvents();
                 displayWindow(new Color(Color.Black));
             }
-            
         }
         /// <summary>
         /// Uruchomienie aplikacji
@@ -85,8 +82,7 @@ namespace ARDSQL_GUI
             {
                 this.isWorking = true;
                 connection1.onClick(receiver, 2);
-                this.isWorking = false;
-
+                
             }
         }
         /// <summary>
@@ -113,12 +109,9 @@ namespace ARDSQL_GUI
         /// </summary>
         private void update()
         {
-            rpiStatus.scale = 0.2f;
-            rpiStatus.position = new Vector2f(400, 300);
             minTemp.updateTemperatureString();
             maxTemp.updateTemperatureString();
             avgTemp.updateTemperatureString();
-            rpiStatus.update();
             statusBar.update(isWorking);
         }
         /// <summary>
@@ -170,18 +163,10 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Obiekt serwera danych
         /// </summary>
-        TemperatureReceiver receiver = new TemperatureReceiver(134);
-        /// <summary>
+        TemperatureReceiver receiver = new TemperatureReceiver(134, "192.168.1.6", "192.168.1.5");
+        /// <summary>s
         /// Pasek statusu
         /// </summary>
         StatusBar statusBar = new StatusBar(new Color(Color.Green), new Vector2f(0, 0), new Vector2f(800,50), "Ready to work", "Working...", new Color(Color.Red));
-        /// <summary>
-        /// Tekstura statusu rpi
-        /// </summary>
-        StatusImageTexture rpiTextureStatus = new StatusImageTexture();
-        /// <summary>
-        /// Status Raspberry pi
-        /// </summary>
-        RapberryStatus rpiStatus = new RapberryStatus(0, 0, 1280, 987);
     }
 }

@@ -84,8 +84,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArdSQLDBDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Sources\Configuration.cs" />
     <Compile Include="Sources\ConnButton.cs" />
     <Compile Include="Sources\ExitButton.cs" />
+    <Compile Include="Sources\Label.cs" />
     <Compile Include="Sources\MainWindow.cs" />
     <Compile Include="Sources\CMouse.cs" />
     <Compile Include="Sources\Program.cs" />
@@ -95,13 +97,18 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Sources\RapberryStatus.cs" />
     <Compile Include="Sources\SQLCon.cs" />
     <Compile Include="Sources\StatusBar.cs" />
+    <Compile Include="Sources\StatusImageTexture.cs" />
     <Compile Include="Sources\Temperature.cs" />
     <Compile Include="Sources\TemperatureReceiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EmbeddedResource Include="Conf\Server.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Data\ArdSQLDBDataSet.xsc">
       <DependentUpon>ArdSQLDBDataSet.xsd</DependentUpon>
     </None>
@@ -117,6 +124,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Resources\Graphics\status_texture.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\lucon.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -143,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\UML\" />
+    <Folder Include="RPI CODES\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\ArdSQLDB.mdf">

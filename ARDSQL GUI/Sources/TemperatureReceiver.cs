@@ -34,17 +34,24 @@ namespace ARDSQL_GUI
             
         }
         /// <summary>
-        /// Konstruktor który uruchamia serwer 
+        /// Kontruktor ładujący konfigurację klient'a i serwera z pliku Server.conf.
         /// </summary>
-        /// <param name="port">Port na którym serwer powstanie</param>
+        /// <param name="port">Port na którym będzie stał.</param>
         public TemperatureReceiver(int port)
         {
-            populateResponses(); //wypełnianmy odpowiedzi
+            programIps = serverConf.getConfiguration();
             try
             {
+                this.clientIP = IPAddress.Parse(programIps[0]);
+                populateResponses(); //wypełnianmy odpowiedzi
                 this.port = port;
-                this.serverAddr = IPAddress.Any; // przypisanie IP
+                this.serverAddr = IPAddress.Parse(programIps[1]); // przypisanie IP
                 receiverListener = new TcpListener(serverAddr, this.port); //uruchomienie portu
+                foreach (string a in programIps)
+                {
+                    Console.Write("Read Ips: ");
+                    Console.WriteLine(a);
+                }
             }
             catch (Exception e)
             {
@@ -53,13 +60,17 @@ namespace ARDSQL_GUI
 
         }
         /// <summary>
+        /// Configuracja serwera
+        /// </summary>
+        Configuration serverConf = new Configuration("Conf/Server.conf");
+        /// <summary>
         /// Przetwarza dane odebrane od metody startServer
         /// </summary>
         /// <returns>Zwraca obiekt temperatury</returns>
         public Temperature processData()
         {
             this.writeBuffer.Clear();
-           this.receivedData.Clear(); //czyszczonko uszanowanko
+            this.receivedData.Clear(); //Oczyszczanko uszanowanko - przypis Domy :D
            //this.receiverResponser = new TcpClient(this.clientIP, 134);
             Console.Write("Received data: ");
             for (int i = 0; i < recvBuffer.Length; i++)
@@ -94,6 +105,7 @@ namespace ARDSQL_GUI
                 Console.WriteLine("No known responses.");
             }
         }
+        List<String> programIps = new List<String>();
         /// <summary>
         /// Bufor zapisu
         /// </summary>
@@ -118,7 +130,7 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Adres IP serwera
         /// </summary>
-        IPAddress serverAddr = null;
+        IPAddress serverAddr;
         /// <summary>
         /// Dane..?
         /// </summary>
@@ -127,10 +139,6 @@ namespace ARDSQL_GUI
         /// Nasłuchiwanie na protokole TCP
         /// </summary>
         private TcpListener receiverListener;
-        /// <summary>
-        /// Odpowiadacz
-        /// </summary>
-        private TcpClient receiverResponser;
         /// <summary>
         /// Port na którym działa serwer.
         /// </summary>
@@ -221,7 +229,7 @@ namespace ARDSQL_GUI
                      *  Wywalić wykomentowany kod i wstawić go do pól klas 
                      * 
                      */
-                    Console.WriteLine("Ping done. Netrunner is online. Starting data Exchange...");
+                    Console.WriteLine("Ping done. Netrunner Hub is online. Starting data Exchange...");
                     Console.WriteLine("Waiting for connection...");
                     try
                     {
@@ -243,7 +251,7 @@ namespace ARDSQL_GUI
                 }
                 else
                 {
-                    Console.WriteLine("Ping Done. Netrunner is offline. Check that Netrunner is connected to\n PC, using network cable.");
+                    Console.WriteLine("Ping Done. Netrunner Hub is offline. Check that Netrunner Hub is connected to\n PC, using network cable.");
                     Console.WriteLine("Closing server...");
                     isServerStarted = false;
                     receiverListener.Stop();

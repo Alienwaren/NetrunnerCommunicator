@@ -121,7 +121,7 @@ namespace ARDSQL_GUI
         /// <summary>
         /// I aktualizujemy :P
         /// </summary>
-        public virtual void update()
+        public void update()
         {
             this.barRectangle.FillColor = barColor;
             this.barRectangle.Position = barPosition;

@@ -40,11 +40,15 @@ namespace ARDSQL_GUI
         /// <summary>
         /// String przechowujący treść podpisu
         /// </summary>
-        private String labelString = "";
+        private String actualLabelString = "";
         /// <summary>
         /// Label po zmianie
         /// </summary>
         private String changedLabel = "";
+        /// <summary>
+        /// Ten co przed zmianą
+        /// </summary>
+        private String standardLabel = "";
         /// <summary>
         /// Inicjacja atrybutów paska
         /// </summary>
@@ -59,7 +63,8 @@ namespace ARDSQL_GUI
             base.initAttributes(colorToBeSet, startingPosition, startingSize);
             normalColor = colorToBeSet;
             this.changedColorAfterClick = changedColor;
-            this.labelString = initialLabel;
+            this.actualLabelString = initialLabel;
+            this.standardLabel = initialLabel;
             this.changedLabel = labelAfterChange;
             this.statusBarLabel.Font = this.labelFont;
             this.statusBarLabel.Color = new Color(Color.Black);
@@ -71,10 +76,11 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Updejt status bara.
         /// </summary>
-        public override void update()
+        public void update(bool isServerWorking)
         {
             base.update();
-            this.statusBarLabel.DisplayedString = labelString;
+            this.statusBarLabel.DisplayedString = actualLabelString;
+            this.changeColor(isServerWorking);
         }
         /// <summary>
         /// Malujemy! :D
@@ -86,49 +92,20 @@ namespace ARDSQL_GUI
             renderWindow.Draw(statusBarLabel);
         }
         /// <summary>
-        /// Ilość kliknięć
-        /// </summary>
-        private int amountOfClicks = 0;
-        /// <summary>
         /// Zmiana koloru status Bara
         /// </summary>
-        private void changeColor()
+        private void changeColor(bool isServerWorking)
         {
-            //if (base.barRectangle.FillColor.Equals(new Color(Color.Green)))
-            //{
-            //    Console.WriteLine("Changing status color to: {0}", Color.Red.ToString());
-            //    base.barRectangle.FillColor = this.changedColorAfterClick;
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Changing status color to: {0}", Color.Green.ToString());
-            //}
-            if (amountOfClicks == 0)
+            if (isServerWorking)
             {
-                
-                    Console.WriteLine("Changing status color to: {0}", Color.Red.ToString());
-                    base.barColor = this.changedColorAfterClick;
-                
-                amountOfClicks++;
-                return;
+                base.barColor = this.changedColorAfterClick;
+                this.actualLabelString = changedLabel;
             }
-            if (amountOfClicks == 1)
+            if (!isServerWorking)
             {
-                
-                    Console.WriteLine("Changing status color to: {0}", Color.Green.ToString());
-                    base.barColor = this.normalColor;
-
-                amountOfClicks = 0;
-                return;
+                base.barColor = this.normalColor;
+                this.actualLabelString = standardLabel;
             }
-        }
-        /// <summary>
-        /// Przeciążnienie do onClick()
-        /// </summary>
-        public override void onClick()
-        {
-            base.onClick();
-            this.changeColor();
         }
     }
 }

@@ -298,4 +298,27 @@
             running = false;
         }
         
-        
+/////////////////////////////////////////////////
+private void changeColor()
+        {
+            if (amountOfClicks == 0)
+            {
+                
+                    Console.WriteLine("Changing status color to: {0}", Color.Red.ToString());
+                    base.barColor = this.changedColorAfterClick;
+                    this.actualLabelString = changedLabel;
+                
+                amountOfClicks++;
+                return;
+            }
+            if (amountOfClicks == 1)
+            {
+                
+						Console.WriteLine("Changing status color to: {0}", Color.Green.ToString());
+						base.barColor = this.normalColor;
+						this.actualLabelString = standardLabel;
+                    
+                amountOfClicks = 0;
+                return;
+            }
+        }        
