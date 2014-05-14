@@ -17,7 +17,14 @@ namespace ARDSQL_GUI
         /// </summary>
         public LabelTexture()
         {
-
+            if (loadTexture())
+            {
+                Console.WriteLine("Success! ");
+            }
+            else
+            {
+                Console.Write("False! ");
+            }
         }
         /// <summary>
         /// Ładowanko tekstury
@@ -25,11 +32,31 @@ namespace ARDSQL_GUI
         /// <returns>Zwraca czy ładowanko sie udało</returns>
         private Boolean loadTexture()
         {
-            return true;
+            Console.Write("Loading label texture... ");
+            try
+            {
+                this.labelTexture = new Texture("Resources/Graphics/Label_Texture.png");
+                return true;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
         }
         /// <summary>
         /// Tekstura podpisu
         /// </summary>
         private Texture labelTexture;
+        /// <summary>
+        /// Geter dla tekstury
+        /// </summary>
+        public Texture texture
+        {
+            get
+            {
+                return labelTexture;
+            }
+        }      
     }
 }

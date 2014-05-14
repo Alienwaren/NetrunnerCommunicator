@@ -29,6 +29,7 @@ namespace ARDSQL_GUI
         {     
             raspBerryPiSprite = new Sprite(raspBerryPiTexture, raspBerryTextureRectangle);
             this.raspBerryPiSprite.Origin = new Vector2f(raspBerryPiSprite.GetGlobalBounds().Width / 2, raspBerryPiSprite.GetGlobalBounds().Height / 2);
+            rpiLabel.createSpriteAndSetPosition(this.labelsTextures.texture, new IntRect(0, 0, 1251, 304));
         }
         /// <summary>
         /// Rysowanko uszanowanko
@@ -36,6 +37,7 @@ namespace ARDSQL_GUI
         public void draw(RenderWindow windowToBeDrawed)
         {
             windowToBeDrawed.Draw(raspBerryPiSprite);
+            this.rpiLabel.draw(windowToBeDrawed);
         }
         /// <summary>
         /// Updatujemy obrazek
@@ -44,6 +46,9 @@ namespace ARDSQL_GUI
         {
             raspBerryPiSprite.Scale = new Vector2f(spriteScaleFloat, spriteScaleFloat);
             raspBerryPiSprite.Position = spritePosition;
+            rpiLabel.scale = 0.2f;
+            rpiLabel.position = new Vector2f((raspBerryPiSprite.GetGlobalBounds().Height / 2), raspBerryPiSprite.GetGlobalBounds().Width / 2);
+            rpiLabel.update();
         }
         /// <summary>
         /// Pozycja sprajta
@@ -89,5 +94,18 @@ namespace ARDSQL_GUI
                 spriteScaleFloat = value;
             }
         }
+        /// <summary>
+        /// Tesktura podpisów do Raspberry Pi
+        /// </summary>
+        LabelTexture labelsTextures = new LabelTexture();
+        /// <summary>
+        /// Podpisy statusów komponentów
+        /// </summary>
+        Label rpiLabel = new Label("Voltage", new Vector2f(170, 350));
+        /// <summary>
+        /// Wartość napięcia:
+        /// TODO: odbieranie z serwera tej wartości
+        /// </summary>
+        Voltage rpiVcc = new Voltage(5.0F);
     }
 }

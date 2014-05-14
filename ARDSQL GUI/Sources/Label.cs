@@ -21,6 +21,9 @@ namespace ARDSQL_GUI
             labelTextString = labelText;
             this.labelPosition = initialPosition;
             initAttrib();
+            Voltage v1 = new Voltage(10);
+            Voltage v2 = new Voltage(5);
+            Voltage v3 = v1 / v2;
         }
         /// <summary>
         /// Inicjacja atrybutów tekstu
@@ -29,7 +32,23 @@ namespace ARDSQL_GUI
         {
             this.labelText.CharacterSize = 20;
             this.labelText.Color = new Color(Color.White);
+            this.labelText.Position = new Vector2f(labelPosition.X - 20, labelPosition.Y - 30);
         }
+        /// <summary>
+        /// Podpięcie tekstury do sprajta
+        /// </summary>
+        /// <param name="labelTexture">Tesktura do ustawienia</param>
+        /// <param name="spriteRectangle">Skrawek z tekstury</param>
+        public void createSpriteAndSetPosition(Texture labelTexture, IntRect spriteRectangle)
+        {
+            this.labelSprite = new Sprite(labelTexture, spriteRectangle);
+            this.labelSprite.Position = labelPosition;
+        }
+        /// <summary>
+        /// Duszek podpisu 
+        /// </summary>
+        /// <seealso cref="LabelTexture.cs"/>
+        private Sprite labelSprite;
         /// <summary>
         /// Tekst podpisu
         /// </summary>
@@ -45,9 +64,11 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Aktualizacja atrybutów
         /// </summary>
-        void update()
+        public void update()
         {
+            this.labelSprite.Origin = new Vector2f(labelSprite.GetGlobalBounds().Width / 2, labelSprite.GetGlobalBounds().Height / 2);
             this.labelText.DisplayedString = labelTextString;
+            this.labelSprite.Scale = new Vector2f(this.labelScale, this.labelScale);
         }
         /// <summary>
         /// Geter i seter dla tekstu
@@ -88,6 +109,25 @@ namespace ARDSQL_GUI
         public virtual void draw(RenderWindow windowToBeDrawed)
         {
             windowToBeDrawed.Draw(labelText);
+            windowToBeDrawed.Draw(this.labelSprite);
+        }
+        /// <summary>
+        /// Skala naszego podpisu statusu
+        /// </summary>
+        private float labelScale = 1;
+        /// <summary>
+        /// Geter i seter dla skali
+        /// </summary>
+        public float scale
+        {
+            get
+            {
+                return labelScale;
+            }
+            set
+            {
+                labelScale = value;
+            }
         }
     }
 }

@@ -88,6 +88,7 @@
     <Compile Include="Sources\ConnButton.cs" />
     <Compile Include="Sources\ExitButton.cs" />
     <Compile Include="Sources\Label.cs" />
+    <Compile Include="Sources\LabelTexture.cs" />
     <Compile Include="Sources\MainWindow.cs" />
     <Compile Include="Sources\CMouse.cs" />
     <Compile Include="Sources\Program.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Sources\StatusImageTexture.cs" />
     <Compile Include="Sources\Temperature.cs" />
     <Compile Include="Sources\TemperatureReceiver.cs" />
+    <Compile Include="Sources\Voltage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -124,6 +126,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Resources\Graphics\Label_Texture.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Graphics\status_texture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

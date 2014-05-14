@@ -42,7 +42,7 @@ namespace ARDSQL_GUI
         /// </summary>
         private void displayLoop()
         {
-            window1.SetFramerateLimit(60);
+            window1.SetFramerateLimit(15);
             initEvents();
             rpiStatus.bindTextureAndSetAttrib(this.rpiTextureStatus.statusRpi);
             while (window1.IsOpen())
@@ -51,7 +51,6 @@ namespace ARDSQL_GUI
                 window1.DispatchEvents();
                 displayWindow(new Color(Color.Black));
             }
-            
         }
         /// <summary>
         /// Uruchomienie aplikacji
