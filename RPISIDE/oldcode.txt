@@ -1,0 +1,64 @@
+bool CHubServer::pingPcHost()
+{
+	std::string command = "ping -c 1 " + serverIp;
+	const char* cmdChar = command.c_str();
+	std::cout << command << std::endl;
+	char buffer[500];
+	FILE* pipe = popen(cmdChar, "r");
+	if(!pipe)
+	{
+		std::cout << "Cannot execute ping" << std::endl;
+		return false;
+	}
+	while(!feof(pipe))
+	{
+		if(fgets(buffer, 500, pipe) != NULL)
+		{
+			pingResult += buffer;
+		}
+	}
+	std::cout << pingResult << std::endl;
+	pclose(pipe);
+	cmdChar = NULL;
+	delete cmdChar;
+	return true;
+}
+
+
+	gotInput = gotOption;
+	std::cout << "I'm here! " << gotOption << std::endl;
+	if(this->gotInput == 1)
+	{
+		std::cout << "Pinging this host " << clientIp << std::endl;
+		pingPcHost();
+	}
+}
+bool CHubServer::pingPcHost()
+{
+	int status;
+	pid_t pid;
+	pid = fork();
+	const char* commandChar = commandName.c_str();
+	const char* parametersChar = pingParameters.c_str();
+	if(pid == 0)
+	{
+		std::cout << "Executing " << commandName << std::endl;
+		int status = execl(SHELL, SHELL "-c", commandChar, parametersChar);
+	}else if(pid < 0)
+	{
+		return false;
+	}else
+	{
+		if(waitpid(pid, &status, 0) != pid)
+			return false;
+		std::cout << "Executed " << commandName << " with status: " << status << std::endl;
+	}
+	if(status == 0)
+	{
+		return true;
+	}else
+	{
+		return false;
+	}
+	commandChar = NULL;
+	return false;
