@@ -48,6 +48,7 @@ namespace ARDSQL_GUI
             raspBerryPiSprite.Position = spritePosition;
             rpiLabel.scale = 0.2f;
             rpiLabel.position = new Vector2f((raspBerryPiSprite.GetGlobalBounds().Height / 2), raspBerryPiSprite.GetGlobalBounds().Width / 2);
+            rpiLabel.text = "Voltage: " + rpiVcc.getVoltageAsString() + "V";   
             rpiLabel.update();
         }
         /// <summary>

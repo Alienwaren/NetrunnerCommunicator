@@ -21,15 +21,24 @@ namespace ARDSQL_GUI
             labelTextString = labelText;
             this.labelPosition = initialPosition;
             initAttrib();
-            Voltage v1 = new Voltage(10);
-            Voltage v2 = new Voltage(5);
-            Voltage v3 = v1 / v2;
+        }
+        /// <summary>
+        /// Konstruktor....
+        /// </summary>
+        public Label(Vector2f initialPosition)
+        {
+            this.labelPosition = initialPosition;
+            initAttrib();
         }
         /// <summary>
         /// Inicjacja atrybutów tekstu
         /// </summary>
         private void initAttrib()
         {
+            if (labelTextString == " ")
+            {
+                labelText = new Text("EMPTY! CORRECT THAT", labelFont);
+            }
             this.labelText.CharacterSize = 20;
             this.labelText.Color = new Color(Color.White);
             this.labelText.Position = new Vector2f(labelPosition.X - 20, labelPosition.Y - 30);

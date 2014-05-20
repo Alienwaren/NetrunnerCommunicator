@@ -41,6 +41,28 @@ namespace ARDSQL_GUI
         /// </summary>
         private double voltageAmount = 0.0F;
         /// <summary>
+        /// Geter i seter dla pola vlotageAmount
+        /// </summary>
+        public double voltage
+        {
+            get
+            {
+                return voltageAmount;
+            }
+            set
+            {
+                voltageAmount = value;
+            }
+        }
+        /// <summary>
+        /// Konwersja napięcia do string
+        /// </summary>
+        /// <returns>Zwraca wartość napięcia jako string</returns>
+        public string getVoltageAsString()
+        {
+            return voltageAmount.ToString();
+        }
+        /// <summary>
         /// Przeciążony operator dodawania
         /// </summary>
         /// <param name="leftSide">Lewa strona równania</param>

@@ -17,7 +17,8 @@ namespace ARDSQL_GUI
     /// <remarks>
     /// IPNTRNHB - ip Netrunner Hub'a.
     /// </remarks>
-    class Configuration
+    class Configuration 
+        : IDisposable
     {
         /// <summary>
         /// Konstruktor który pozwala na utworzenie obiektu StreamReader poprzez podanie mu nazwy pliku
@@ -28,12 +29,13 @@ namespace ARDSQL_GUI
             confReader = new StreamReader(fileName);
             loadConfFile();
             cleanAddr();
+            clearSQL();
         }
         /// <summary>
         /// Ładowanie konfiguracji serwera z pliku
         /// </summary>
         /// <returns>Zwraca odczytane opcje konfiguracyjne</returns>
-        private String loadConfFile()
+        private void loadConfFile()
         {
             Console.Write("Reading configuration file...");
             try
@@ -56,11 +58,16 @@ namespace ARDSQL_GUI
             {
                 Console.WriteLine(e.ToString());
             }
-            confReader.Dispose(); // kasowanko confReadera
+            confReader.Close(); // kasowanko confReadera
             displayLoadedConf();
             Console.Write("Starting processing of loaded configuration...");
+            /*
+             * 
+             * Przetwarzamy konfigurację
+             * 
+             */
             processIp();
-            return "";
+            processSQL();
         }
         /// <summary>
         /// Wyświetlenie odczytanej konfiguracji
@@ -80,25 +87,62 @@ namespace ARDSQL_GUI
         private void processIp()
         {
             String[] processTemp;
-            Console.Write("IP");
+            Console.WriteLine("IP, ");
                 for (int i = 0; i < readLines.Count; i++)
                 {
                     if (readLines[i].Contains("IPNTRNHB:"))
                     {
                         processTemp = readLines.ElementAt(i).Split(':');
-                        beforeClean.Add(processTemp[1]); ///i dorzucamy adres ip do gotowej konfiguracji
+                        beforeCleanIp.Add(processTemp[1]); ///i dorzucamy adres ip do gotowej konfiguracji
                         break;
                     }
                 }
                 for (int i = 0; i < readLines.Count; i++)
                 {
-                    if (readLines[i].Contains("IPNTRN:"))
+                    if (readLines[i].Contains("IPNTRNPC:"))
                     {
                         processTemp = readLines.ElementAt(i).Split(':');
-                        beforeClean.Add(processTemp[1]); /// a teraz IP Netrunnera
+                        beforeCleanIp.Add(processTemp[1]); /// a teraz IP Netrunnera
                         break;
                     }
                 }
+                Console.WriteLine("Done reading IP Configuration. ");
+        }
+        /// <summary>
+        /// Przetworzenie konfiguracji serwera SQL
+        /// </summary>
+        private void processSQL()
+        {
+            String[] processedSQL;
+            Console.WriteLine("SQL Configuration");
+            for (int i = 0; i < readLines.Count; i++)
+            {
+                if (readLines[i].Contains("SQLSRV:"))
+                {
+                    processedSQL = readLines.ElementAt(i).Split(':');
+                    beforeCleanSQL.Add(processedSQL[1]);
+                    break;
+                }
+            }
+            for (int i = 0; i < readLines.Count; i++)
+            {
+                if (readLines[i].Contains("SQLDBNM:"))
+                {
+                    processedSQL = readLines.ElementAt(i).Split(':');
+                    beforeCleanSQL.Add(processedSQL[1]);
+                    break;
+                }
+            }
+            for (int i = 0; i < readLines.Count; i++)
+            {
+                if (readLines[i].Contains("USRNM:"))
+                {
+                    processedSQL = readLines.ElementAt(i).Split(':');
+                    beforeCleanSQL.Add(processedSQL[1]);
+                    break;
+                }
+            }
+            Console.WriteLine("Done processing SQL Configuration");
         }
         /// <summary>
         /// Wyczyszczenie adresów z białych znaków
@@ -107,7 +151,7 @@ namespace ARDSQL_GUI
         private void cleanAddr()
         {
             List <string> ips = new List<string>();
-            ips = this.beforeClean;
+            ips = this.beforeCleanIp;
             for(int i = 0; i < ips.Count; i++)
             {
                 if(ips[i].Contains(' '))
@@ -117,11 +161,33 @@ namespace ARDSQL_GUI
                 readyIps.Add(ips[i]);
 
             }
+            
+        }
+        /// <summary>
+        /// Czyszczonko ze śmieci konfiguracja SQL'a
+        /// </summary>
+        private void clearSQL()
+        {
+            List<string> sqls = new List<string>();
+            sqls = this.beforeCleanSQL;
+            for (int i = 0; i < sqls.Count; i++)
+            {
+                if(sqls[i].Contains(' '))
+                {
+                    sqls[i] = sqls[i].Substring(1, sqls[i].Length - 1);
+                }
+                readySQL.Add(sqls[i]);
+            }
+            
         }
         /// <summary>
         /// Lista gotowych juz adresów IP dla serwera
         /// </summary>
         private List<String> readyIps = new List<String>();
+        /// <summary>
+        /// Gotowa konfiguracja serwera SQL
+        /// </summary>
+        private List<String> readySQL = new List<String>(3);
         /// <summary>
         /// "Odczytywacz danych" z pliku konfiguracyjnego
         /// </summary>
@@ -133,14 +199,62 @@ namespace ARDSQL_GUI
         /// <summary>
         /// Gotowa konfiguracja
         /// </summary>
-        private List<string> beforeClean = new List<string>();
+        private List<string> beforeCleanIp = new List<string>();
+        /// <summary>
+        /// Konfuguracja przed czyszczeniem
+        /// </summary>
+        private List<string> beforeCleanSQL = new List<string>();
         /// <summary>
         /// Zwróci konfiguracje
         /// </summary>
         /// <returns>Zwraca konfigurację w postaci listy</returns>
-        public List<String> getConfiguration()
+        public List<String> getConfigurationIp()
         {
             return readyIps;
+        }
+        /// <summary>
+        /// Zwrócenie konfiguracji serwera sql
+        /// </summary>
+        /// <returns>Zwraca gotową już konfiguracje</returns>
+        public List<String> getSQLServerConfiguration()
+        {
+            return readySQL;
+        }
+        /// <summary>
+        /// Metoda do zwolnienia pamięci zajętej przez tą klasę
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        /// <summary>
+        /// Przeciążenie które zostanie wywołane poprzez publiczną metodę
+        /// Usuwa obiekt z pamięci
+        /// </summary>
+        /// <param name="disposing">Parametr oznaczający czy obiekt jest właśnie usuwany</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            Console.WriteLine("Clearing configuration class... ");
+            if (disposing == true)
+            {
+                beforeCleanIp.Clear();
+                beforeCleanSQL.Clear();
+                this.readLines.Clear();
+                this.readyIps.Clear();
+                this.readySQL.Clear();
+            }
+            else
+            {
+                this.confReader.Dispose();
+            }
+        }
+        /// <summary>
+        /// Finalizer zwalniający niezarządzalne zasoby
+        /// </summary>
+        ~Configuration()
+        {
+            Dispose(false);
         }
     }
     /// <summary>

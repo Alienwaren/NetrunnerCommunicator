@@ -10,6 +10,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <thread>
+#include <vector>
 #define SHELL "/bin/sh"
 class CHubServer
 {
@@ -20,6 +21,7 @@ public:
 	~CHubServer();
 	void getInput(int gotOption);
 private:
+	std::vector<std::string> commands; //komendy serwera
 	sf::TcpSocket *serverSocket; //nasze gniazdo
 	sf::Socket::Status socketStatus;
 	int serverPort;
@@ -32,6 +34,16 @@ private:
 	int gotInput;
 	bool processPingOutput();
 	void connect(); //³¹czymy siê :P
+	bool connected; //czy po³¹czony
+	///Wysy³amy pakiet. Podajemy w parametrze co ma byæ w pakiecie
+	///RDY - gotowy
+	///DATA - wyœlê teraz dane
+	///END - koniec nadawania, roz³¹cz
+	void sendPacket(std::string whatToSend);
+	///
+	///Wype³niamy wektor danymi komend
+	///
+	void populateCommands();
 	
 };
 

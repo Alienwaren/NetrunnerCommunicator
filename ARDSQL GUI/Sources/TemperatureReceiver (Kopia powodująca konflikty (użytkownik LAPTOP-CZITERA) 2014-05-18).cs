@@ -9,6 +9,8 @@ namespace ARDSQL_GUI
     /// Implementacja serwera odbierającego
     /// </summary>
     class TemperatureReceiver
+        :
+            public SQLCon
     {
         /// <summary>
         /// Konstruktor który uruchamia serwer
@@ -52,21 +54,59 @@ namespace ARDSQL_GUI
                     Console.Write("Read Ips: ");
                     Console.WriteLine(a);
                 }
-                serverConf.Dispose();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-            programIps.Clear();
+
         }
         /// <summary>
         /// Configuracja serwera
         /// </summary>
         Configuration serverConf = new Configuration("Conf/Server.conf");
         /// <summary>
-        /// Spis adresów serwera
+        /// Przetwarza dane odebrane od metody startServer
         /// </summary>
+        /// <returns>Zwraca obiekt temperatury</returns>
+        public Temperature processData()
+        {
+            this.writeBuffer.Clear();
+            this.receivedData.Clear(); //Oczyszczanko uszanowanko - przypis Domy :D
+           //this.receiverResponser = new TcpClient(this.clientIP, 134);
+            Console.Write("Received data: ");
+            for (int i = 0; i < recvBuffer.Length; i++)
+            {
+                if (recvBuffer[i] == 0)
+                {
+                    break;
+                }
+                writeBuffer.Add(recvBuffer[i]);
+            }
+            String temp = System.Text.Encoding.UTF8.GetString(writeBuffer.ToArray()); //konwersja na String z byte
+            Console.WriteLine(temp);
+            Console.Write("Done receiving data.");
+
+            Console.WriteLine("Remembering received data.");
+            receivedData.Add(temp);
+            response(); //odpowiadamy
+            return new Temperature();
+        }
+        /// <summary>
+        /// Odpowiedź na dane do odczytu
+        /// </summary>
+        public void response()
+        {
+            if(receivedData[0] == responses[0])
+            {
+                Console.WriteLine("{0}.Preparing for data receive...", responses[0]);
+
+            }
+            else
+            {
+                Console.WriteLine("No known responses.");
+            }
+        }
         List<String> programIps = new List<String>();
         /// <summary>
         /// Bufor zapisu
@@ -101,10 +141,6 @@ namespace ARDSQL_GUI
         /// Nasłuchiwanie na protokole TCP
         /// </summary>
         private TcpListener receiverListener;
-        /// <summary>
-        /// Klient służący do odpowiadania na dane
-        /// </summary>
-        private TcpClient responseClient;
         /// <summary>
         /// Port na którym działa serwer.
         /// </summary>
@@ -145,59 +181,6 @@ namespace ARDSQL_GUI
         /// Odbieracz i wysyłacz.
         /// </summary>
         NetworkStream receiverStream;
-        /// <summary>
-        /// Przetwarza dane odebrane od metody startServer
-        /// </summary>
-        /// <returns>Zwraca obiekt temperatury</returns>
-        public Temperature receiveData()
-        {
-            this.writeBuffer.Clear();
-            this.receivedData.Clear(); //Oczyszczanko uszanowanko - przypis Domy :D
-            //this.receiverResponser = new TcpClient(this.clientIP, 134);
-            Console.Write("Received data: ");
-            for (int i = 0; i < recvBuffer.Length; i++)
-            {
-                if (recvBuffer[i] == 0)
-                {
-                    break;
-                }
-                writeBuffer.Add(recvBuffer[i]);
-            }
-            String temp = System.Text.Encoding.UTF8.GetString(writeBuffer.ToArray()); //konwersja na String z byte
-            Console.WriteLine(temp);
-            Console.Write("Done receiving data.");
-            Console.WriteLine("Remembering received data.");
-            receivedData.Add(temp);
-            Console.WriteLine("Processing data...");
-            Temperature processedTemp = processData(); //przetwarzamy
-            return processedTemp;
-        }
-        /// <summary>
-        /// Odpowiedź na dane do odczytu
-        /// </summary>
-        public Temperature processData()
-        {
-            Temperature tempTemperature = new Temperature();
-            if (receivedData[0] == responses[0]) ///RDY
-            {
-                Console.WriteLine("Got RDY command. Netrunner Hub is ready for exchanging data.");
-                foreach (var item in receivedData)
-                {
-                    
-                    if(item == responses[2])
-                    {
-                        Console.WriteLine("Processed END command. Ending data processing, thus this is end of them");
-                        receivedData.Clear();
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("Didn't receive RDY command. Ignoring data, it be from unknown source");
-            }
-            return tempTemperature;
-        }
         /// <summary>
         /// Wystartowanie serwera
         /// </summary>
@@ -244,6 +227,10 @@ namespace ARDSQL_GUI
                 }
                 if (pingReply.Status == IPStatus.Success)
                 {
+                    /*
+                     *  Wywalić wykomentowany kod i wstawić go do pól klas 
+                     * 
+                     */
                     Console.WriteLine("Ping done. Netrunner Hub is online. Starting data Exchange...");
                     Console.WriteLine("Waiting for connection...");
                     try
@@ -253,13 +240,10 @@ namespace ARDSQL_GUI
                         {
                             this.receiverStream = new NetworkStream(serverSocket);
                             Console.WriteLine("Connected! Waiting for data...");
+                           // amountOfReceivedData = serverSocket.Receive(recvBuffer);
                             amountOfReceivedData = receiverStream.Read(recvBuffer, 0, recvBuffer.Length);
-                            receiveData();
+                            processData();
                             isServerStarted = false;
-                        }
-                        else
-                        {
-                            return 0;
                         }
                     }catch(Exception e)
                     {
