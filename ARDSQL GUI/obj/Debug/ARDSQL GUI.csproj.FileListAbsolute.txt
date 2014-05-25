@@ -1,0 +1,43 @@
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Data\ArdSQLDB.mdf
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Data\ArdSQLDB_log.ldf
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\exit.png
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\lucon.ttf
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\ARDSQL GUI.exe.config
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\ARDSQL GUI.exe
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\ARDSQL GUI.pdb
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\EntityFramework.dll
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\sfmlnet-audio-2.dll
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\sfmlnet-graphics-2.dll
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\sfmlnet-window-2.dll
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\EntityFramework.xml
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\obj\Debug\ARDSQL GUI.exe
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\obj\Debug\ARDSQL GUI.pdb
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\ARDSQL GUI.exe
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\sfmlnet-graphics-2.dll
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\sfmlnet-window-2.dll
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\buttons_texture.png
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Unit test.dll
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Unit test.pdb
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\ARDSQL GUI.exe.config
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\lucon.ttf
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Data\ArdSQLDB.mdf
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Data\ArdSQLDB_log.ldf
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\buttons_texture.png
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\exit.png
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\ARDSQL GUI.pdb
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\EntityFramework.dll
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\sfmlnet-audio-2.dll
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Unit test.dll
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\EntityFramework.xml
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Unit test.pdb
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\obj\Debug\ARDSQL GUI.exe
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\obj\Debug\ARDSQL GUI.pdb
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\obj\Debug\ARDSQL GUI.csprojResolveAssemblyReference.cache
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Conf\Server.conf
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Conf\Server.conf
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\obj\Debug\ARDSQL GUI.csprojResolveAssemblyReference.cache
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\status_texture.png
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\status_texture.png
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\Label_Texture.png
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\MySql.Data.dll
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\Label_Texture.png
