@@ -53,7 +53,7 @@ namespace ARDSQL_GUI
         /// <param name="tempReceiver"></param>
         public override void onClick(TemperatureReceiver serverReceiver, int maxConnections)
         {
-            serverReceiver.startServer(maxConnections);
+            //serverReceiver.startServer(maxConnections);
         }
     }
 }

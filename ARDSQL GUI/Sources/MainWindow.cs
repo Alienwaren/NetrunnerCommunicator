@@ -34,6 +34,7 @@ namespace ARDSQL_GUI
             exit1.draw(window1);
             statusBar.draw(window1);
             rpiStatus.draw(window1);
+            messageTest.draw(window1);
             window1.Display();
         }
 
@@ -42,6 +43,7 @@ namespace ARDSQL_GUI
         /// </summary>
         private void displayLoop()
         {
+            
             window1.SetFramerateLimit(15);
             initEvents();
             rpiStatus.bindTextureAndSetAttrib(this.rpiTextureStatus.statusRpi);
@@ -83,7 +85,7 @@ namespace ARDSQL_GUI
             if (windowMouse.checkForMouseCollision(connection1.getSprite(), window1))
             {
                 this.isWorking = true;
-                connection1.onClick(receiver, 2);
+                dataReceiver.getRpiData();
                 this.isWorking = false;
 
             }
@@ -167,10 +169,6 @@ namespace ARDSQL_GUI
         /// </summary>
         ConnButton connection1 = new ConnButton(new Vector2f(120, 195), "Connect");
         /// <summary>
-        /// Obiekt serwera danych
-        /// </summary>
-        TemperatureReceiver receiver = new TemperatureReceiver(134);
-        /// <summary>
         /// Pasek statusu
         /// </summary>
         StatusBar statusBar = new StatusBar(new Color(Color.Green), new Vector2f(0, 0), new Vector2f(800,50), "Ready to work", "Working...", new Color(Color.Red));
@@ -182,5 +180,13 @@ namespace ARDSQL_GUI
         /// Status Raspberry pi
         /// </summary>
         RapberryStatus rpiStatus = new RapberryStatus(0, 0, 1280, 987);
+        /// <summary>
+        /// "Odbieracz danych" z serwera SQL
+        /// </summary>
+        TemperatureReceiver dataReceiver = new TemperatureReceiver();
+        /// <summary>
+        /// TEST
+        /// </summary>
+        MsgBox messageTest = new MsgBox("Netrunner Hub Control Center", true);
     }
 }

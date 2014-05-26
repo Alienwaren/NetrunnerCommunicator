@@ -41,3 +41,5 @@ F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\status_texture
 E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\Label_Texture.png
 E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\MySql.Data.dll
 F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\Label_Texture.png
+E:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\clairTexture.png
+F:\DB\Dropbox\Repozytoria\ARDSQL GUI\bin\Debug\Resources\Graphics\clairTexture.png

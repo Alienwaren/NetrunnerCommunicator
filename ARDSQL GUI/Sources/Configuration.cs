@@ -142,6 +142,15 @@ namespace ARDSQL_GUI
                     break;
                 }
             }
+            for (int i = 0; i < readLines.Count; i++)
+            {
+                if (readLines[i].Contains("SQLTBNM:"))
+                {
+                    processedSQL = readLines.ElementAt(i).Split(':');
+                    beforeCleanSQL.Add(processedSQL[1]);
+                    break;
+                }
+            }
             Console.WriteLine("Done processing SQL Configuration");
         }
         /// <summary>
